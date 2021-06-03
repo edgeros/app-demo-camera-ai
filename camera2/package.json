@@ -1,6 +1,6 @@
 {
-    "name": "camera-v2",
-    "version": "0.0.43",
+    "name": "com.acoinfo.camera-v2",
+    "version": "0.0.3",
     "description": "camera demo",
     "main": "main.js",
     "scripts": {
@@ -8,13 +8,13 @@
     },
     "license": "MIT",
     "dependencies": {
-        "@edgeros/jsre-medias": "^1.0.1",
+        "@edgeros/jsre-medias": "^1.0.2",
         "@edgeros/jsre-onvif": "^1.0.0"
     },
     "devDependencies": {
         "eslint": "^7.23.0",
         "@edgeros/jsre-types": "^0.1.1",
-        "@edgeros/eslint-plugin-jsre": "^0.0.1"
+        "@edgeros/eslint-plugin-jsre": "^0.0.3"
     },
-    "author": "chengyongbin"
+    "author": "edgeros@acoinfo.com"
 }

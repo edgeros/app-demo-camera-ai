@@ -1,0 +1,17 @@
+{
+  "env": {
+      "browser": true,
+      "commonjs": true,
+      "es2021": true,
+      "@edgeros/jsre/jsre": true
+  },
+  "extends": [],
+  "parserOptions": {
+      "ecmaVersion": 12
+  },
+  "rules": {},
+  "root": true,
+  "plugins": [
+      "@edgeros/jsre"
+  ]
+}

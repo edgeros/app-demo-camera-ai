@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 EdgerOS Team.
+ * Copyright (c) 2021 EdgerOS Team.
  * All rights reserved.
  *
  * Detailed license information can be found in the LICENSE file.

@@ -1,28 +1,29 @@
 {
+    "name": "camera-v2",
     "bundleid": "com.acoinfo.camera-v2",
     "ignore_modules": [
         "@edgeros/eslint-plugin-jsre",
         "@edgeros/jsre-types"
     ],
     "ignore_path": [
-        "./test/*",
-        "./temp/*"
+        "./test/**",
+        "./temp/**"
     ],
     "assets": {
         "ico_big": "assets/big.png",
         "ico_small": "assets/small.png",
-        "splash": "assets/start.jpg",
-        "widget_icon_1": "assets/widget_1.png"
+        "ico_widget": "assets/widget.png",
+        "splash": "assets/splash.png"
     },
     "program": {
         "gss": false,
         "log": "console",
         "will": false,
         "reside": false,
-        "mesv": "0.9.0"
+        "mesv": "1.0.0"
     },
     "vendor": {
-        "id": "edgeros@acoinfo.com",
+        "id": "10257",
         "name": "ACOINFO",
         "email": "edgeros@acoinfo.com",
         "phone": "",
@@ -30,13 +31,13 @@
     },
     "update": {
         "remove": [
-            "static"
+            "public"
         ]
     },
     "widget": [
         {
-            "ico": "widget_icon_1",
-            "name": "Test",
+            "ico": "ico_widget",
+            "name": "My Widget",
             "path": "widget",
             "rows": 2,
             "columns": 2,
