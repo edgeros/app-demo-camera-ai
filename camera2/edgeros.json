@@ -1,0 +1,46 @@
+{
+    "bundleid": "com.acoinfo.camera-v2",
+    "ignore_modules": [
+        "@edgeros/eslint-plugin-jsre",
+        "@edgeros/jsre-types"
+    ],
+    "ignore_path": [
+        "./test/*",
+        "./temp/*"
+    ],
+    "assets": {
+        "ico_big": "assets/big.png",
+        "ico_small": "assets/small.png",
+        "splash": "assets/start.jpg",
+        "widget_icon_1": "assets/widget_1.png"
+    },
+    "program": {
+        "gss": false,
+        "log": "console",
+        "will": false,
+        "reside": false,
+        "mesv": "0.9.0"
+    },
+    "vendor": {
+        "id": "edgeros@acoinfo.com",
+        "name": "ACOINFO",
+        "email": "edgeros@acoinfo.com",
+        "phone": "",
+        "fax": ""
+    },
+    "update": {
+        "remove": [
+            "static"
+        ]
+    },
+    "widget": [
+        {
+            "ico": "widget_icon_1",
+            "name": "Test",
+            "path": "widget",
+            "rows": 2,
+            "columns": 2,
+            "category": "Demo"
+        }
+    ]
+}
