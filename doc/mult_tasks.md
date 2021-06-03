@@ -32,7 +32,7 @@ sigslot.emit('event1', msg);
 ## 工程介绍
 在 `eap-demo-camera-ai` DEMO 中新增【camera_src2.js】和【src_ai.js】两个文件。
 
-`eap-demo-camera-ai` 工程获取地址：【https://gitee.com/edgeros/eap-demo-camera-ai.git】，目录结构如下：
+`eap-demo-camera-ai` 工程获取地址：【 https://gitee.com/edgeros/eap-demo-camera-ai.git 】或 【 https://github.com/edgeros/eap-demo-camera-ai.git 】，目录结构如下：
 
 ```
 eap-demo-camera-ai

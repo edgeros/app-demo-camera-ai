@@ -21,7 +21,7 @@
 
 ![ui](./res/camera2/ui.png)
 
-+ `eap-demo-camera-ai` 工程获取地址：【https://gitee.com/edgeros/eap-demo-camera-ai.git】，目录结构如下：
++ `eap-demo-camera-ai` 工程获取地址：【 https://gitee.com/edgeros/eap-demo-camera-ai.git 】或 【 https://github.com/edgeros/eap-demo-camera-ai.git 】，目录结构如下：
 
 ```
 eap-demo-camera-ai
