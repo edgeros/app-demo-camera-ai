@@ -1,4 +1,4 @@
-AI 应用开发请参考指南：https://www.t.e0a.cc/docs/edgeros  -> 【进阶】-> 【AI 应用开发】。
+AI 应用开发请参考指南：https://www.edgeros.com/edgeros/guide/tutorial_adv/ai.html。
 
-多任务开发请参考指南：https://www.t.e0a.cc/docs/edgeros  -> 【进阶】-> 【多任务】。
+多任务开发请参考指南：https://www.edgeros.com/edgeros/guide/tutorial_adv/multiple_task.html。
 
