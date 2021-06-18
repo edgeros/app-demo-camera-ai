@@ -22,6 +22,11 @@
         "reside": false,
         "mesv": "1.0.0"
     },
+    "loading":{
+        "splash":"splash",
+        "background":"#000000",
+        "animation":"enlarge"
+    },
     "vendor": {
         "id": "10257",
         "name": "ACOINFO",
