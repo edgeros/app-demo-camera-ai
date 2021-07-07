@@ -81,6 +81,9 @@ class CameraSource extends FlvSrc {
 		this.mediaInfo = { width: 0, height: 0, fps: 0 }; /* Origin media size. */
 	}
 
+	/*
+	 * start()
+	 */
 	start() {
 		var netcam = new MediaDecoder();
 		this._netcam = netcam;

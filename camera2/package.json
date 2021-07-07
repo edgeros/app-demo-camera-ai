@@ -1,6 +1,6 @@
 {
     "name": "com.acoinfo.camera-v2",
-    "version": "0.0.3",
+    "version": "0.0.30",
     "description": "camera demo",
     "main": "main.js",
     "scripts": {
@@ -8,8 +8,7 @@
     },
     "license": "MIT",
     "dependencies": {
-        "@edgeros/jsre-medias": "^1.0.2",
-        "@edgeros/jsre-onvif": "^1.0.0"
+        "@edgeros/jsre-medias": "^2.0.0"
     },
     "devDependencies": {
         "eslint": "^7.23.0",

@@ -1,8 +1,8 @@
 <template>
   <div class="about">
-    <div class="canvas-wrapper">
-      <canvas id="video" class="canvas" width="360px" height="202px" />
-      <canvas id="layout" class="canvas" width="360px" height="202px" />
+    <div class="canvas-wrapper" :style="{position:'relative', width: width + 'px', height: height + 'px'}">
+      <canvas id="video" :style="{position:'absolute', width: width + 'px', height: height + 'px'}"/>
+      <canvas id="layout" :style="{position:'absolute'}" :width="width" :height="height"/>
     </div>
     <div class="menu">
       <van-button v-on:click="startPlay()">播放</van-button>
@@ -20,8 +20,10 @@ export default {
   props: ['dev'],
   data() {
     return {
-      isStarting: false
-    }
+      isStarting: false,
+      width: 360,
+      height: 202,
+    };
   },
   methods: {
     startPlay: function () {
@@ -37,13 +39,43 @@ export default {
         console.log('Stop.');
         this.mediaClient.close();
       }
-    }
+    },
+    getPageSize: function () {
+      let page = {
+        width: 0,
+        height: 0,
+      };
+      if (window.innerWidth && window.innerHeight) {
+        page.width = window.innerWidth;
+        page.height = window.innerHeight;
+      } else if (
+        document.body &&
+        document.body.clientWidth &&
+        document.body.clientHeight
+      ) {
+        page.width = document.body.clientWidth;
+        page.height = document.body.clientHeight;
+      } else if (
+        document.documentElement &&
+        document.documentElement.clientHeight &&
+        document.documentElement.clientWidth
+      ) {
+        page.width = document.documentElement.clientWidth;
+        page.height = document.documentElement.clientHeight;
+      }
+      var w = page.width;
+      var h = parseInt((page.width * 9) / 16);
+      this.width = w;
+      this.height = h;
+      return {w, h};
+    },
   },
   mounted() {
+    const {w, h} = this.getPageSize();
     this.np = new NodePlayer();
     this.np.setBufferTime(512);
     this.np.setView("video");
-    this.np.on("stats",(s)=>{
+    this.np.on("stats", (s) => {
       console.log(s);
     });
 
@@ -51,10 +83,9 @@ export default {
     var canvas = document.getElementById('layout');
     var proto = location.protocol === 'http:' ? 'ws:' : 'wss:';
     var host = `${proto}//${window.location.host}`;
-    console.log('----TEST: canvas:', typeof canvas, canvas);
     var mediaClient = createMediaClient(MediaClient, host, canvas, {
-        canvaw: 360, 
-        canvah: 202,
+        canvaw: w,
+        canvah: h,
         path: this.dev.path
     }, (client, path) => {
       this.np.start(host + path);
@@ -74,31 +105,5 @@ export default {
   destroyed() {
     this.stopPlay();
   },
-}
+};
 </script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-.menu{
-  position: absolute;
-}
-#video {
-  top: 0;
-  left: 0;
-}
-#layout {
-  top: 0;
-  left: 0;
-}
-.canvas {
-  position: absolute;
-  width: 360px;
-  height: 202px;
-}
-.canvas-wrapper {
-  position: relative;
-  width: 360px;
-  height: 202px;
-}
-
-</style>

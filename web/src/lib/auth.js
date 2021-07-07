@@ -2,7 +2,7 @@ const auth = {
   token: '',
   srand: ''
 };
-  
+
 export function getAuth() {
   return {token: auth.token, srand: auth.srand};
 }

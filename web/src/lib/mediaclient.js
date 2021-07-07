@@ -82,7 +82,6 @@ export default function createMediaClient(ClientType, origin, canvas, opts, shak
 				this.videoh = data.height;
 				this.rw = this.canvaw / this.videow;
 				this.rh = this.canvah / this.videoh;
-	
 			} else if (type === 'face') {
 				this.draw(data);
 	

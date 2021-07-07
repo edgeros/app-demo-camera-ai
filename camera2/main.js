@@ -10,9 +10,10 @@
  *
  */
 
-var WebApp = require('webapp');
-var WebMedia = require('webmedia');
-var onvif = require('@edgeros/jsre-onvif');
+/* Import system modules */
+const WebApp = require('webapp');
+const WebMedia = require('webmedia');
+const bodyParser = require('middleware').bodyParser;
 const {Manager} = require('@edgeros/jsre-medias');
 if (true) {
 	var CameraSource = require('./camera_src');
@@ -97,53 +98,36 @@ function connectMedia(info, cb) {
 		return cb(err);
 	}
 
-	var cam = undefined;
-	new Promise((resolve, reject) => {
-		dev.username = info.username;
-		dev.password = info.password;
-		cam = new onvif.Cam(dev);
-		cam.on('connect', (err) => {
+	 var stream = dev.mainStream;
+	if (!stream) {
+		server.createStream(devId, info, (err, streams) => {
 			if (err) {
-				console.warn(`Camera(${cam.urn}) connection fail:`, err);
-				return reject(err);
-			}
-			cam.getStreamUri({protocol:'RTSP'}, (err, stream) => {
-				if (err) {
-					console.warn(`Camera(${cam.urn}) get uri fail:`, err);
-					reject(err);
-				} else {
-					console.info(`Camera(${cam.urn}) get uri:`, stream.uri);
-					resolve(stream.uri);
-				}
-			});
-		});
-	})
-	.then((uri) => {
-		var media = server.findMedia(devId);
-		if (media) { /* Media already conect. */
-			return cb(media);
-		}
-
-		var urlParts = server.getCamUrl(uri);
-		var parts = {
-			user: urlParts.user || cam.username,
-			pass: urlParts.pass || cam.password,
-			hostname: urlParts.hostname,
-			port: urlParts.port || 554,
-			path: urlParts.path || '/'
-		}
-		return server.createMedia(devId, parts, cam, (media) => {
-			if (media instanceof Error) {
-				cb();
+				cb(err);
 			} else {
-				server.removeDev(devId);
+				getMedia(cb);
+			}
+		});
+	} else if (stream.media) {
+		cb(stream.media);
+	} else {
+		getMedia(cb);
+	}
+
+	function getMedia(cb) {
+		var stream = dev.mainStream;
+		if (!stream) {
+			return cb();
+		} else if (stream.media) {
+			return cb(stream.media);
+		}
+		server.createMedia(devId, stream.token, info, (err, media) => {
+			if (err) {
+				cb(err);
+			} else {
 				cb(media);
 			}
 		});
-	})
-	.catch((err) => {
-		cb(err);
-	});
+	}
 }
 
 /* 
@@ -157,38 +141,27 @@ app.get('/api/list', (req, res) => {
 		}
 	}
 
-	var devs = {};
+	var devs = [];
 	server.iterDev((key, dev) => {
-		devs[key] = {
+		var info = dev.dev;
+		var stream = dev.mainStream;
+		var media = stream ? stream.media : null;
+		devs.push({
 			devId: key,
-			alias: `${dev.hostname}:${dev.port}${dev.path}`,
-			report: dev.urn,
-			path: '',
-			status: false
-		}
+			alias: `${info.hostname}:${info.port}${info.path}`,
+			report: info.urn,
+			path: media ? '/' + media.sid : '',
+			status: media ? true: false
+		});
 	});
-	server.iterMedia((key, media) => {
-		devs[key] = {
-			devId: media.key,
-			alias: media.alias,
-			report: media.sid,
-			path: '/' + media.sid,
-			status: true
-		}
-	});
-
-	var infos = [];
-	for (var key in devs) {
-		infos.push(devs[key]);
-	}
-	res.send(JSON.stringify(infos));
+	res.send(JSON.stringify(devs));
 });
 
 /*
  * req: {devId, username, password}
  * res: {result, msg, path}
  */
-app.post('/api/login', (req, res) => {
+app.post('/api/login', bodyParser.json(), (req, res) => {
 	console.log('Recv camera-login message.');
 	if (!server) {
 		return res.json({
@@ -198,40 +171,29 @@ app.post('/api/login', (req, res) => {
 	}
 
 	var ret = {result: false, msg: 'error'};
-	var data = [];
-	req.on('data', (buf) => {
-		data.push(buf);
-	});
-
-	req.on('end', () => {
-		try {
-			data = Buffer.concat(data);
-			var info = JSON.parse(data.toString());
-			console.log('login data:', info);
-
-			connectMedia(info, (media) => {
-				if (!media || media instanceof Error) {
-					ret.msg = `Device ${info.devId} login fail.`;
-					console.warn(media ? media.message : ret.msg);
-				} else {
-					ret.result = true;
-					ret.msg = 'ok';
-					ret.path = '/' + media.sid;
-				}
-				res.send(JSON.stringify(ret));
-			});
-
-		} catch(e) {
-			ret.result = false;
-			ret.msg = e.message;
-			console.warn(ret.msg);
+	var info = req.body;
+	try {
+		connectMedia(info, (media) => {
+			if (!media || media instanceof Error) {
+				ret.msg = `Device ${info.devId} login fail.`;
+				console.warn(media ? media.message : ret.msg);
+			} else {
+				ret.result = true;
+				ret.msg = 'ok';
+				ret.path = '/' + media.sid;
+			}
 			res.send(JSON.stringify(ret));
-			return;
-		}
-	});
+		});
+	} catch(e) {
+		ret.result = false;
+		ret.msg = e.message;
+		console.warn(ret.msg);
+		res.send(JSON.stringify(ret));
+		return;
+	}
 });
 
-/* app start */
+/* Start App */
 app.start();
 
 /* Start media server. */

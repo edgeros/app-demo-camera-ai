@@ -1,13 +1,11 @@
 <template>
   <div id="app">
     <router-link to="/"></router-link>
-    <!--<router-link to="/player">Player</router-link>-->
     <router-view></router-view>
   </div>
 </template>
 
 <script>
-
 export default {
   name: 'App',
 }
@@ -18,7 +16,6 @@ export default {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  /* text-align: center; */
   color: #2c3e50;
   background-color: #ffffff;
 }
