@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <van-nav-bar title="设备列表" />
+    <van-nav-bar title="设备列表" class="safe-area-top"/>
     <van-list>
         <van-cell
           v-for="(dev, index) of devs"

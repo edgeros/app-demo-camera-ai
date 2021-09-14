@@ -32,4 +32,8 @@ export default {
 #nav a.router-link-exact-active {
   color: #42b983;
 }
+
+.safe-area-top {
+  padding-top: var(--edger-safe-area-inset-top);
+}
 </style>

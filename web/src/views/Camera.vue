@@ -1,6 +1,6 @@
 <template>
   <div class="about">
-    <van-nav-bar title="在线监控" left-arrow @click-left="goBack()" />
+    <van-nav-bar title="在线监控" left-arrow @click-left="goBack()" class="safe-area-top"/>
     <player :dev="dev"></player>
   </div>
 </template>
