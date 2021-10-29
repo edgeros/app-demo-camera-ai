@@ -41,7 +41,7 @@
     },
     "widget": [
         {
-            "ico": "widget.png",
+            "ico": "ico_widget",
             "name": "My Widget",
             "path": "widget",
             "rows": 2,
