@@ -20,7 +20,7 @@
         "log": "console",
         "will": false,
         "reside": false,
-        "mesv": "1.0.0"
+        "mesv": "1.3.7"
     },
     "loading": {
         "splash": "splash",
