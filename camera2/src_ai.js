@@ -62,6 +62,7 @@ class SrcAI {
 		console.info('Src ai start:', this.main);
 		try {
 			this.netcam = new MediaDecoder().open(this.main);
+			this.netcam.destVideoFormat({disable: false});
 			this.netcam.on('video', this.onVideo.bind(this));
 			this.netcam.start();
 		} catch(e) {
