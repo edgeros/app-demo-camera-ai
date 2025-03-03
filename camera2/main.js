@@ -154,7 +154,8 @@ app.get('/api/list', (req, res) => {
 			status: media ? true: false
 		});
 	});
-	res.send(JSON.stringify(devs));
+	// res.send(JSON.stringify(devs));
+    res.json(devs);
 });
 
 /*
@@ -182,13 +183,15 @@ app.post('/api/login', bodyParser.json(), (req, res) => {
 				ret.msg = 'ok';
 				ret.path = '/' + media.sid;
 			}
-			res.send(JSON.stringify(ret));
+			//res.send(JSON.stringify(ret));
+            res.json(ret);
 		});
 	} catch(e) {
 		ret.result = false;
 		ret.msg = e.message;
 		console.warn(ret.msg);
-		res.send(JSON.stringify(ret));
+		//res.send(JSON.stringify(ret));
+        res.json(ret);
 		return;
 	}
 });
